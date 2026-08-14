@@ -10,7 +10,10 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import botsyncLogo from "../assets/botsync-logo.jpg";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+
+const socialImage = new URL(botsyncLogo, "https://bot-sync.com").href;
 
 function NotFoundComponent() {
   return (
@@ -87,9 +90,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:site_name", content: "BotSync" },
       { property: "og:type", content: "website" },
       { property: "og:locale", content: "en_ZA" },
-      { property: "og:image", content: "https://bot-sync.com/botsync-app-preview.png" },
+      { property: "og:image", content: socialImage },
+      { property: "og:image:type", content: "image/jpeg" },
+      { property: "og:image:width", content: "1254" },
+      { property: "og:image:height", content: "1254" },
+      { property: "og:image:alt", content: "BotSync trading automation logo" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:image", content: "https://bot-sync.com/botsync-app-preview.png" },
+      { name: "twitter:image", content: socialImage },
+      { name: "twitter:image:alt", content: "BotSync trading automation logo" },
       { name: "theme-color", content: "#080c14" },
     ],
     links: [

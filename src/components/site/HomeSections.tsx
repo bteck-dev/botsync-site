@@ -12,7 +12,22 @@ export function AboutHome() {
     <Section id="about" className="overflow-hidden border-y border-border bg-surface/25">
       <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20">
         <Reveal>
-          <SectionHeading align="left" eyebrow="About BotSync" title={<>The control centre for your <span className="text-gradient">trading automation</span></>} description="BotSync brings Expert Advisors, broker connections, AI-powered market tools, and community management into one mobile-first workspace. Built for independent traders, mentors, and growing trading communities." />
+          <SectionHeading align="left" eyebrow="About BotSync" title={<>The control centre for your <span className="text-gradient">trading automation</span></>} />
+          <div className="mt-5 space-y-4 text-base leading-relaxed text-muted-foreground sm:text-lg">
+            <p>
+              Botsync is a trading automation platform designed to bring Expert Advisor technology
+              closer to your smartphone.
+            </p>
+            <p>
+              Take automated trading wherever you go. Our Mobile Trading EA platform makes it
+              easier to connect, manage, and monitor automated trading strategies directly from
+              your mobile device.
+            </p>
+            <p>
+              Whether you&apos;re an experienced trader, signal provider, or trading mentor, you
+              can access powerful automation tools without being tied to your computer.
+            </p>
+          </div>
           <div className="mt-8 grid gap-3 sm:grid-cols-2">
             {["Built for MT4 and MT5", "Manage from any device", "No coding required", "Designed to scale"].map((item) => (
               <div key={item} className="flex items-center gap-2.5 text-sm text-muted-foreground"><CheckCircle2 className="size-4 shrink-0 text-brand-emerald" aria-hidden="true" />{item}</div>
