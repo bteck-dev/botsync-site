@@ -20,8 +20,8 @@ export const API_ORIGIN = trim(rawApi);
 export const API_BASE = `${API_ORIGIN}/api/v1`;
 export const PORTAL_ORIGIN = trim(rawPortal);
 export const authUrls = {
-  login: `${PORTAL_ORIGIN}/login`,
-  register: `${PORTAL_ORIGIN}/register`,
+  login: "/under-construction?feature=login",
+  register: "/under-construction?feature=builder",
 };
 
 export const navSections = [
