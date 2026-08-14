@@ -1,0 +1,24 @@
+name: botsync-site-production
+
+services:
+  site:
+    image: botsync-site-production:latest
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.production
+      args:
+        VITE_BOTSYNC_API_URL: ${VITE_BOTSYNC_API_URL:?VITE_BOTSYNC_API_URL is required}
+        VITE_BOTSYNC_PORTAL_URL: ${VITE_BOTSYNC_PORTAL_URL:?VITE_BOTSYNC_PORTAL_URL is required}
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      HOST: 0.0.0.0
+      PORT: 3005
+    ports:
+      - "127.0.0.1:3005:3005"
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://127.0.0.1:3005/"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 15s

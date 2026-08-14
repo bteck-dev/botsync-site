@@ -1,0 +1,112 @@
+name: Deploy website production
+
+on:
+  push:
+    branches:
+      - release/production
+  workflow_dispatch:
+
+concurrency:
+  group: website-production
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Deploy release/production to website production
+    runs-on: ubuntu-latest
+    environment: production
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out release
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Validate production configuration
+        env:
+          VITE_BOTSYNC_API_URL: ${{ secrets.VITE_BOTSYNC_API_URL }}
+          VITE_BOTSYNC_PORTAL_URL: ${{ secrets.VITE_BOTSYNC_PORTAL_URL }}
+        run: |
+          test -n "$VITE_BOTSYNC_API_URL"
+          test -n "$VITE_BOTSYNC_PORTAL_URL"
+          npm install --global npm@11.6.2
+          npm ci
+          npm run lint
+          npx tsc --noEmit
+          npm run build
+
+      - name: Configure SSH
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_PORT: ${{ secrets.VPS_PORT || 22 }}
+          VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+        run: |
+          test -n "$VPS_HOST"
+          test -n "$VPS_SSH_KEY"
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$VPS_SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -p "$VPS_PORT" -H "$VPS_HOST" >> ~/.ssh/known_hosts
+
+      - name: Package and upload release
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_PORT: ${{ secrets.VPS_PORT || 22 }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+          VITE_BOTSYNC_API_URL: ${{ secrets.VITE_BOTSYNC_API_URL }}
+          VITE_BOTSYNC_PORTAL_URL: ${{ secrets.VITE_BOTSYNC_PORTAL_URL }}
+          RELEASE_ID: ${{ github.sha }}-${{ github.run_number }}
+        run: |
+          test -n "$VPS_USER"
+          printf '%s' "$RELEASE_ID" > public/__release.txt
+          printf 'VITE_BOTSYNC_API_URL=%s\nVITE_BOTSYNC_PORTAL_URL=%s\n' \
+            "$VITE_BOTSYNC_API_URL" "$VITE_BOTSYNC_PORTAL_URL" > .env.production
+          tar -czf /tmp/botsync-site-production.tar.gz \
+            package.json package-lock.json tsconfig.json tsr.config.json \
+            vite.config.ts eslint.config.js .dockerignore .env.production \
+            src public docker
+          scp -P "$VPS_PORT" /tmp/botsync-site-production.tar.gz \
+            "$VPS_USER@$VPS_HOST:/tmp/botsync-site-production.tar.gz"
+          ssh -p "$VPS_PORT" "$VPS_USER@$VPS_HOST" \
+            "mkdir -p /opt/botsync/site-production && tar -xzf /tmp/botsync-site-production.tar.gz -C /opt/botsync/site-production && rm /tmp/botsync-site-production.tar.gz"
+
+      - name: Build, restart, and verify production
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_PORT: ${{ secrets.VPS_PORT || 22 }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+          RELEASE_ID: ${{ github.sha }}-${{ github.run_number }}
+        run: |
+          ssh -p "$VPS_PORT" "$VPS_USER@$VPS_HOST" 'bash -se' -- "$RELEASE_ID" <<'REMOTE'
+            set -eu
+            RELEASE_ID="$1"
+            cd /opt/botsync/site-production
+            chmod 600 .env.production
+            docker compose --env-file .env.production -f docker/docker-compose.production.yml config --quiet
+            docker compose --env-file .env.production -f docker/docker-compose.production.yml build
+            docker compose --env-file .env.production -f docker/docker-compose.production.yml up -d --remove-orphans
+            SITE_CONTAINER="$(docker compose --env-file .env.production -f docker/docker-compose.production.yml ps -q site)"
+            for attempt in $(seq 1 24); do
+              STATUS="$(docker inspect --format='{{.State.Health.Status}}' "$SITE_CONTAINER")"
+              if [ "$STATUS" = "healthy" ]; then
+                break
+              fi
+              if [ "$attempt" -eq 24 ]; then
+                docker compose --env-file .env.production -f docker/docker-compose.production.yml logs --tail=150 site
+                exit 1
+              fi
+              sleep 5
+            done
+            LOCAL_RELEASE="$(curl --fail --silent --show-error http://127.0.0.1:3005/__release.txt)"
+            test "$LOCAL_RELEASE" = "$RELEASE_ID"
+            PUBLIC_RELEASE="$(curl --fail --silent --show-error https://bot-sync.com/__release.txt)"
+            test "$PUBLIC_RELEASE" = "$RELEASE_ID"
+          REMOTE

@@ -7,6 +7,6 @@
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 export default defineConfig({
-  // Namecheap cPanel runs this as a standard Node.js application.
+  // The production VPS runs this as a standard Node.js container.
   nitro: { preset: "node-server" },
 });

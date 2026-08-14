@@ -1,0 +1,9 @@
+.git
+.github
+.env
+.env.*
+.output
+.tanstack
+.wrangler
+node_modules
+*.log
