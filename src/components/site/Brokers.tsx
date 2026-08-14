@@ -1,173 +1,47 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { AlertTriangle, Building2, Loader2, Search } from "lucide-react";
-import { Reveal, Section, SectionHeading, ctaStyles } from "./primitives";
-import { brokersQuery, type Broker, type Platform } from "@/lib/botsync-api";
-
-const filters: Array<{ key: "all" | Platform; label: string }> = [
-  { key: "all", label: "All platforms" },
-  { key: "MT4", label: "MT4" },
-  { key: "MT5", label: "MT5" },
-];
+import { Building2, CheckCircle2, Radio, ShieldCheck, Waypoints } from "lucide-react";
+import { brokersQuery, type Broker } from "@/lib/botsync-api";
+import { Reveal, SectionHeading } from "./primitives";
 
 function BrokerLogo({ broker }: { broker: Broker }) {
   const [failed, setFailed] = useState(false);
-  if (!broker.logoUrl || failed) {
-    return (
-      <span
-        className="inline-flex size-11 items-center justify-center rounded-xl border border-border bg-surface-2/70"
-        aria-hidden="true"
-      >
-        <Building2 className="size-5 text-brand-cyan" />
-      </span>
-    );
-  }
-  return (
-    <img
-      src={broker.logoUrl}
-      alt={`${broker.name} logo`}
-      loading="lazy"
-      decoding="async"
-      onError={() => setFailed(true)}
-      className="size-11 rounded-xl border border-border bg-surface-2/70 object-contain p-1.5"
-    />
-  );
+  if (!broker.logoUrl || failed) return <Building2 className="size-7 text-brand-cyan" aria-hidden="true" />;
+  return <img src={broker.logoUrl} alt="" loading="lazy" onError={() => setFailed(true)} className="size-12 shrink-0 rounded-xl bg-white/95 object-contain p-1.5" />;
 }
 
 export function Brokers() {
-  const { data, isPending, isError, refetch, isFetching } = useQuery(brokersQuery);
-  const [query, setQuery] = useState("");
-  const [platform, setPlatform] = useState<"all" | Platform>("all");
-
-  const brokers = useMemo(() => data ?? [], [data]);
-  const showControls = brokers.length > 8;
-
-  const visible = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    return brokers.filter((b) => {
-      const matchesQuery = !q || b.name.toLowerCase().includes(q);
-      const matchesPlatform = platform === "all" || b.platforms.includes(platform);
-      return matchesQuery && matchesPlatform;
-    });
-  }, [brokers, query, platform]);
-
+  const { data: brokers = [], isPending, isError } = useQuery(brokersQuery);
   return (
-    <Section id="brokers">
-      <SectionHeading
-        eyebrow="Supported brokers"
-        title="Connect the Brokers Your Community Already Uses"
-        description="This list is maintained by BotSync administrators and updates automatically — only brokers marked active are shown here."
-      />
-
-      <div className="mt-12">
-        {showControls ? (
-          <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <label className="relative w-full sm:max-w-xs">
-              <span className="sr-only">Search brokers</span>
-              <Search
-                className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
-                aria-hidden="true"
-              />
-              <input
-                type="search"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search brokers"
-                className="w-full rounded-xl border border-border bg-surface/70 py-2.5 pr-3 pl-9 text-sm text-foreground placeholder:text-muted-foreground"
-              />
-            </label>
-            <div className="flex gap-2" role="group" aria-label="Filter by platform">
-              {filters.map((f) => (
-                <button
-                  key={f.key}
-                  type="button"
-                  aria-pressed={platform === f.key}
-                  onClick={() => setPlatform(f.key)}
-                  className={
-                    platform === f.key
-                      ? "rounded-xl border border-brand-cyan/60 bg-surface-2 px-3.5 py-2 text-sm font-medium"
-                      : "rounded-xl border border-border bg-surface/60 px-3.5 py-2 text-sm text-muted-foreground hover:text-foreground"
-                  }
-                >
-                  {f.label}
-                </button>
-              ))}
+    <section id="brokers" className="relative scroll-mt-28 overflow-hidden py-20 sm:py-28" aria-label="Supported brokers">
+      <div className="grid-bg pointer-events-none absolute inset-0 opacity-30" aria-hidden="true" />
+      <div className="container-page relative">
+        <div className="grid items-end gap-8 lg:grid-cols-[1fr_auto]">
+          <Reveal><SectionHeading align="left" eyebrow="Broker network" title={<>Connect to the market. <span className="text-gradient">Stay in control.</span></>} description="Bring supported MT4 and MT5 broker accounts into one streamlined automation workspace." /></Reveal>
+          <Reveal delay={100} className="grid grid-cols-3 gap-2 sm:gap-3">
+            {[
+              { icon: Radio, label: "Live sync" }, { icon: ShieldCheck, label: "Protected" }, { icon: Waypoints, label: "MT4 & MT5" },
+            ].map(({ icon: Icon, label }) => <div key={label} className="rounded-xl border border-border bg-surface/60 px-3 py-3 text-center text-xs font-semibold text-muted-foreground sm:min-w-24"><Icon className="mx-auto mb-2 size-4 text-brand-emerald" aria-hidden="true" />{label}</div>)}
+          </Reveal>
+        </div>
+        <Reveal delay={150} className="mt-12">
+          <div className="relative rounded-3xl border border-border bg-surface/40 p-3 shadow-2xl sm:p-5">
+            <div className="absolute -inset-px -z-10 rounded-3xl bg-gradient-to-r from-brand-blue/25 via-brand-cyan/15 to-brand-emerald/20 blur-xl" aria-hidden="true" />
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-3 px-1">
+              <span className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest text-brand-emerald uppercase"><span className="live-dot size-2 rounded-full bg-brand-emerald" />Connection network live</span>
+              <span className="flex items-center gap-1.5 text-xs text-muted-foreground"><CheckCircle2 className="size-4 text-brand-cyan" />Supported integrations</span>
             </div>
+            {isPending && <div className="h-24 animate-pulse rounded-2xl bg-surface" />}
+            {isError && <p className="rounded-2xl bg-surface px-5 py-8 text-center text-sm text-muted-foreground">Broker connections are temporarily unavailable.</p>}
+            {!isPending && !isError && brokers.length === 0 && <p className="rounded-2xl bg-surface px-5 py-8 text-center text-sm text-muted-foreground">New broker connections are being prepared.</p>}
+            {brokers.length > 0 && <div className="broker-marquee overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]"><ul className="broker-track flex w-max items-stretch gap-3">{[...brokers, ...brokers].map((broker, index) => (
+              <li key={`${broker.id}-${index}`} aria-hidden={index >= brokers.length} className="flex min-h-24 w-72 items-center gap-4 rounded-2xl border border-border bg-background/70 px-4 py-4 transition-colors hover:border-brand-cyan/35">
+                <span className="flex size-14 shrink-0 items-center justify-center rounded-2xl border border-border bg-surface"><BrokerLogo broker={broker} /></span>
+                <span className="min-w-0"><span className="block truncate font-semibold">{broker.name}</span><span className="mt-1.5 block truncate text-xs text-muted-foreground">{broker.platforms.join(" • ") || "Trading connection"}</span><span className="mt-2 inline-flex items-center gap-1 text-[11px] font-semibold text-brand-emerald"><span className="size-1.5 rounded-full bg-brand-emerald" />Compatible</span></span>
+              </li>))}</ul></div>}
           </div>
-        ) : null}
-
-        {isPending ? (
-          <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4" aria-busy="true">
-            {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => (
-              <li key={i} className="panel h-32 animate-pulse" />
-            ))}
-          </ul>
-        ) : null}
-
-        {isError ? (
-          <div className="panel flex flex-col items-center gap-4 p-10 text-center">
-            <AlertTriangle className="size-6 text-warn" aria-hidden="true" />
-            <p className="text-sm text-muted-foreground">
-              The broker list couldn't be loaded right now. Please try again shortly.
-            </p>
-            <button type="button" onClick={() => refetch()} className={ctaStyles.ghost}>
-              {isFetching ? <Loader2 className="size-4 animate-spin" aria-hidden="true" /> : null}
-              Retry
-            </button>
-          </div>
-        ) : null}
-
-        {!isPending && !isError && brokers.length === 0 ? (
-          <p className="panel p-10 text-center text-sm text-muted-foreground">
-            No supported brokers are published yet. Check back soon.
-          </p>
-        ) : null}
-
-        {!isPending && !isError && brokers.length > 0 && visible.length === 0 ? (
-          <p className="panel p-10 text-center text-sm text-muted-foreground">
-            No brokers match your search.
-          </p>
-        ) : null}
-
-        {visible.length > 0 ? (
-          <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {visible.map((broker, i) => (
-              <Reveal as="li" key={broker.id} delay={Math.min(i, 8) * 60}>
-                <div className="panel flex h-full flex-col gap-4 p-5">
-                  <div className="flex items-center gap-3">
-                    <BrokerLogo broker={broker} />
-                    <div className="min-w-0">
-                      <h3 className="truncate font-display text-sm font-semibold">{broker.name}</h3>
-                      <p className="text-xs text-brand-emerald">Available</p>
-                    </div>
-                  </div>
-                  <div className="mt-auto flex flex-wrap items-center gap-2">
-                    {broker.platforms.length > 0 ? (
-                      broker.platforms.map((p) => (
-                        <span
-                          key={p}
-                          className="rounded-full border border-border px-2.5 py-1 text-[0.7rem] text-muted-foreground"
-                        >
-                          {p}
-                        </span>
-                      ))
-                    ) : (
-                      <span className="text-[0.7rem] text-muted-foreground">
-                        Platform details coming soon
-                      </span>
-                    )}
-                    {broker.serverCount > 0 ? (
-                      <span className="text-[0.7rem] text-muted-foreground">
-                        {broker.serverCount} server{broker.serverCount === 1 ? "" : "s"}
-                      </span>
-                    ) : null}
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </ul>
-        ) : null}
+        </Reveal>
       </div>
-    </Section>
+    </section>
   );
 }

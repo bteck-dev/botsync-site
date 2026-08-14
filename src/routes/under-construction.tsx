@@ -1,16 +1,16 @@
-import { ArrowLeft, Construction, Sparkles } from "lucide-react";
+import { Apple, ArrowLeft, Construction, Mail, Smartphone, Sparkles } from "lucide-react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Logo } from "@/components/site/Logo";
 import { ctaStyles } from "@/components/site/primitives";
 
 type ConstructionSearch = {
-  feature?: "login" | "builder";
+  feature?: "login" | "builder" | "download";
 };
 
 export const Route = createFileRoute("/under-construction")({
   validateSearch: (search: Record<string, unknown>): ConstructionSearch => {
     const feature = search["feature"];
-    return feature === "login" || feature === "builder" ? { feature } : {};
+    return feature === "login" || feature === "builder" || feature === "download" ? { feature } : {};
   },
   head: () => ({
     meta: [
@@ -26,7 +26,7 @@ export const Route = createFileRoute("/under-construction")({
 
 function UnderConstructionPage() {
   const { feature } = Route.useSearch();
-  const featureName = feature === "login" ? "Login" : "Strategy Builder";
+  const featureName = feature === "login" ? "Login" : feature === "download" ? "App Download" : "Sign Up";
 
   return (
     <main className="grid min-h-screen place-items-center overflow-hidden px-5 py-12">
@@ -53,10 +53,33 @@ function UnderConstructionPage() {
         <h1 className="mt-5 text-4xl font-bold text-balance sm:text-5xl">
           This page is <span className="text-gradient">under construction</span>
         </h1>
-        <p className="mx-auto mt-5 max-w-lg leading-relaxed text-muted-foreground sm:text-lg">
-          We’re putting the finishing touches on the BotSync {featureName.toLowerCase()} experience.
-          Please check back soon.
-        </p>
+        {feature === "download" ? (
+          <>
+            <p className="mx-auto mt-5 max-w-lg leading-relaxed text-muted-foreground sm:text-lg">
+              BotSync for iOS and Android is coming soon.
+            </p>
+            <div className="mx-auto mt-8 grid max-w-lg gap-3 sm:grid-cols-2">
+              <div className="rounded-2xl border border-border bg-surface/60 p-5">
+                <Apple className="mx-auto size-7" aria-hidden="true" />
+                <p className="mt-3 font-semibold">iOS</p>
+                <p className="mt-1 text-xs text-brand-cyan">Coming soon</p>
+              </div>
+              <div className="rounded-2xl border border-border bg-surface/60 p-5">
+                <Smartphone className="mx-auto size-7" aria-hidden="true" />
+                <p className="mt-3 font-semibold">Android</p>
+                <p className="mt-1 text-xs text-brand-emerald">Coming soon</p>
+              </div>
+            </div>
+            <a href="mailto:support@botsync.app?subject=BotSync%20App%20Enquiry" className="mt-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground">
+              <Mail className="size-4" aria-hidden="true" /> Questions about the app? Contact us
+            </a>
+          </>
+        ) : (
+          <p className="mx-auto mt-5 max-w-lg leading-relaxed text-muted-foreground sm:text-lg">
+            We’re putting the finishing touches on the BotSync {featureName.toLowerCase()} experience.
+            Please check back soon.
+          </p>
+        )}
 
         <div className="mt-9 flex justify-center">
           <Link to="/" className={ctaStyles.primary}>

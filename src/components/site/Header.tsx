@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { Menu, X, ArrowRight } from "lucide-react";
+import { Menu, X, ArrowRight, Download } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { Logo } from "./Logo";
 import { ctaStyles } from "./primitives";
-import { authUrls, navSections } from "@/lib/botsync-config";
+import { appDownloadUrl, authUrls, navSections } from "@/lib/botsync-config";
 import { cn } from "@/lib/utils";
 
 export function Header() {
@@ -52,11 +52,18 @@ export function Header() {
         </nav>
 
         <div className="hidden items-center gap-2 lg:flex">
+          <a href="mailto:support@botsync.app?subject=BotSync%20App%20Enquiry" className={ctaStyles.quiet}>
+            Contact
+          </a>
+          <a href={appDownloadUrl} className={ctaStyles.quiet}>
+            <Download className="size-4" aria-hidden="true" />
+            Download App
+          </a>
           <a href={authUrls.login} className={ctaStyles.quiet}>
             Login
           </a>
           <a href={authUrls.register} className={ctaStyles.primary}>
-            Start Building
+            Sign Up
             <ArrowRight className="size-4" aria-hidden="true" />
           </a>
         </div>
@@ -91,11 +98,18 @@ export function Header() {
             </Link>
           ))}
           <div className="mt-3 grid gap-2">
+            <a href="mailto:support@botsync.app?subject=BotSync%20App%20Enquiry" className={ctaStyles.ghost}>
+              Contact
+            </a>
+            <a href={appDownloadUrl} className={ctaStyles.ghost}>
+              <Download className="size-4" aria-hidden="true" />
+              Download App
+            </a>
             <a href={authUrls.login} className={ctaStyles.ghost}>
               Login
             </a>
             <a href={authUrls.register} className={ctaStyles.primary}>
-              Start Building
+              Sign Up
             </a>
           </div>
         </nav>

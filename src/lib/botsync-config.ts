@@ -23,12 +23,18 @@ export const authUrls = {
   login: "/under-construction?feature=login",
   register: "/under-construction?feature=builder",
 };
+export const appDownloadUrl = "/under-construction?feature=download";
+export const socialUrls = {
+  whatsapp: (import.meta.env["VITE_BOTSYNC_WHATSAPP_URL"] as string | undefined) || "https://wa.me/27737526797",
+  tiktok: (import.meta.env["VITE_BOTSYNC_TIKTOK_URL"] as string | undefined) || "https://www.tiktok.com/@bakonetrades_1",
+  facebook: (import.meta.env["VITE_BOTSYNC_FACEBOOK_URL"] as string | undefined) || "",
+};
 
 export const navSections = [
-  { label: "Features", hash: "features" },
-  { label: "How It Works", hash: "how-it-works" },
-  { label: "Community", hash: "community" },
+  { label: "About", hash: "about" },
   { label: "AI Tools", hash: "ai-tools" },
+  { label: "Features", hash: "features" },
   { label: "Brokers", hash: "brokers" },
+  { label: "How It Works", hash: "how-it-works" },
   { label: "FAQ", hash: "faq" },
 ] as const;

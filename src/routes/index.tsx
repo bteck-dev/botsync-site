@@ -2,12 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { Hero } from "@/components/site/Hero";
-import { Platform } from "@/components/site/Platform";
 import { Features } from "@/components/site/Features";
-import { Mentors, Students } from "@/components/site/Community";
 import { Brokers } from "@/components/site/Brokers";
-import { WhyBotSync, HowItWorks, Security } from "@/components/site/WhyHowSecurity";
 import { Faq, FinalCta } from "@/components/site/FaqCta";
+import { AboutHome, AiTools } from "@/components/site/HomeSections";
+import { HowItWorks } from "@/components/site/WhyHowSecurity";
 
 const title = "BotSync — Mobile Trading Automation for Forex Traders";
 const description =
@@ -21,10 +20,11 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: title },
       { property: "og:description", content: description },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "/" },
+      { property: "og:url", content: "https://bot-sync.com/" },
+      { property: "og:image", content: "https://bot-sync.com/botsync-app-preview.png" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [{ rel: "canonical", href: "https://bot-sync.com/" }],
     scripts: [
       {
         type: "application/ld+json",
@@ -32,6 +32,8 @@ export const Route = createFileRoute("/")({
           "@context": "https://schema.org",
           "@type": "SoftwareApplication",
           name: "BotSync",
+          url: "https://bot-sync.com/",
+          image: "https://bot-sync.com/botsync-app-preview.png",
           applicationCategory: "FinanceApplication",
           operatingSystem: "Web, MetaTrader 4, MetaTrader 5",
           description,
@@ -46,7 +48,7 @@ function Home() {
   return (
     <>
       <a
-        href="#platform"
+        href="#features"
         className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[60] focus:rounded-lg focus:bg-surface focus:px-4 focus:py-2 focus:text-sm"
       >
         Skip to content
@@ -54,14 +56,11 @@ function Home() {
       <Header />
       <main>
         <Hero />
-        <Platform />
-        <Features />
-        <Mentors />
-        <Students />
+        <AboutHome />
         <Brokers />
-        <WhyBotSync />
+        <AiTools />
+        <Features />
         <HowItWorks />
-        <Security />
         <Faq />
         <FinalCta />
       </main>

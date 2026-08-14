@@ -8,6 +8,7 @@ export type Platform = "MT4" | "MT5";
 export interface Broker {
   id: string;
   name: string;
+  description: string | null;
   logoUrl: string | null;
   platforms: Platform[];
   serverCount: number;
@@ -93,6 +94,7 @@ export function normalizeBroker(o: Json, index: number): Broker {
   return {
     id: str(o, "id", "uuid", "slug", "name") ?? `broker-${index}`,
     name: str(o, "name", "broker_name", "title") ?? "Unnamed broker",
+    description: str(o, "description", "summary", "tagline", "short_description"),
     logoUrl: str(o, "logo_url", "logoUrl", "logo", "image_url", "image"),
     platforms: platformsOf(o),
     serverCount: activeServers.length,

@@ -86,7 +86,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "author", content: "BotSync" },
       { property: "og:site_name", content: "BotSync" },
       { property: "og:type", content: "website" },
+      { property: "og:locale", content: "en_ZA" },
+      { property: "og:image", content: "https://bot-sync.com/botsync-app-preview.png" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: "https://bot-sync.com/botsync-app-preview.png" },
       { name: "theme-color", content: "#080c14" },
     ],
     links: [

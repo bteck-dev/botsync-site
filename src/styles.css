@@ -221,6 +221,25 @@
   }
 }
 
+@keyframes broker-scroll {
+  to { transform: translateX(-50%); }
+}
+
+@keyframes live-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--brand-emerald) 35%, transparent); }
+  50% { box-shadow: 0 0 0 6px transparent; }
+}
+
+.live-dot { animation: live-pulse 1.8s ease-in-out infinite; }
+
+.broker-track {
+  animation: broker-scroll 28s linear infinite;
+}
+
+.broker-marquee:hover .broker-track {
+  animation-play-state: paused;
+}
+
 @utility reveal {
   opacity: 0;
 }
@@ -240,6 +259,12 @@
     animation: none !important;
     transform: none !important;
   }
+
+  .broker-track {
+    animation: none;
+  }
+
+  .live-dot { animation: none; }
 }
 
 @layer components {
