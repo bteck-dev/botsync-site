@@ -41,10 +41,21 @@ function AboutPage() {
               <h1 className="mt-5 text-4xl font-bold text-balance sm:text-5xl">
                 Trading automation made <span className="text-gradient">more accessible</span>
               </h1>
-              <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-                BotSync helps forex traders connect, manage, and monitor automated MT4 and MT5
-                strategies from one simple mobile-first platform.
-              </p>
+              <div className="mx-auto mt-6 max-w-2xl space-y-4 text-base leading-relaxed text-muted-foreground sm:text-lg">
+                <p>
+                  BotSync is a trading automation platform designed to bring Expert Advisor
+                  technology closer to your smartphone.
+                </p>
+                <p>
+                  Take automated trading wherever you go. Our Mobile Trading EA platform makes it
+                  easier to connect, manage, and monitor automated trading strategies directly
+                  from your mobile device.
+                </p>
+                <p>
+                  Whether you&apos;re an experienced trader, signal provider, or trading mentor,
+                  you can access powerful automation tools without being tied to your computer.
+                </p>
+              </div>
             </Reveal>
           </div>
         </section>
