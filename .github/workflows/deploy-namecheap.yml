@@ -19,6 +19,7 @@ jobs:
     timeout-minutes: 20
     env:
       VITE_BOTSYNC_API_URL: ${{ secrets.VITE_BOTSYNC_API_URL }}
+      VITE_BOTSYNC_PORTAL_URL: ${{ secrets.VITE_BOTSYNC_PORTAL_URL }}
       SSH_HOST: ${{ secrets.NAMECHEAP_SSH_HOST }}
       SSH_USER: ${{ secrets.NAMECHEAP_SSH_USER }}
       SSH_PORT: ${{ secrets.NAMECHEAP_SSH_PORT }}
@@ -64,6 +65,7 @@ jobs:
           test -n "$APP_ROOT"
           test -n "$HEALTHCHECK_URL"
           test -n "$VITE_BOTSYNC_API_URL"
+          test -n "$VITE_BOTSYNC_PORTAL_URL"
           test -n "$SSH_PRIVATE_KEY"
           test -n "$SSH_KNOWN_HOSTS"
           SSH_PORT="${SSH_PORT:-21098}"

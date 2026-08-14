@@ -5,19 +5,23 @@
  * BotSync backend and links out to the existing authenticated app.
  * Set these in your environment — no data is hardcoded in the frontend.
  *
- *   VITE_BOTSYNC_API_URL  e.g. https://api.botsync.app   (API origin, no trailing slash)
- * Login and builder links currently point to the local under-construction page.
+ *   VITE_BOTSYNC_API_URL     e.g. https://api.bot-sync.com     (API origin, no trailing slash)
+ *   VITE_BOTSYNC_PORTAL_URL  e.g. https://portal.bot-sync.com  (portal origin, no trailing slash)
  */
 
 const configuredApi = (import.meta.env["VITE_BOTSYNC_API_URL"] as string | undefined) ?? "";
 const rawApi = configuredApi || (import.meta.env.DEV ? "http://localhost:3000" : "");
+const configuredPortal =
+  (import.meta.env["VITE_BOTSYNC_PORTAL_URL"] as string | undefined) ?? "";
+const rawPortal = configuredPortal || "https://portal.bot-sync.com";
 const trim = (v: string) => v.replace(/\/+$/, "");
 
 export const API_ORIGIN = trim(rawApi);
 export const API_BASE = `${API_ORIGIN}/api/v1`;
+export const PORTAL_ORIGIN = trim(rawPortal);
 export const authUrls = {
-  login: "/under-construction?feature=login",
-  register: "/under-construction?feature=builder",
+  login: `${PORTAL_ORIGIN}/login`,
+  register: `${PORTAL_ORIGIN}/register`,
 };
 
 export const navSections = [
