@@ -27,8 +27,8 @@ const rawApi = configuredApi || defaultApiOrigin;
 const rawPortal = configuredPortal || defaultPortalOrigin;
 const trim = (v: string) => v.replace(/\/+$/, "");
 
-export const API_ORIGIN = trim(rawApi);
-export const API_BASE = `${API_ORIGIN}/api/v1`;
+export const BACKEND_API_ORIGIN = trim(rawApi);
+export const API_BASE = "/api/v1";
 export const PORTAL_ORIGIN = trim(rawPortal);
 export const authUrls = {
   login: `${PORTAL_ORIGIN}/login`,

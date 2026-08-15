@@ -1,7 +1,7 @@
-import { API_BASE, API_ORIGIN } from "./botsync-config";
+import { BACKEND_API_ORIGIN, API_BASE } from "./botsync-config";
 
 /** True once VITE_BOTSYNC_API_URL points at the BotSync backend. */
-export const isApiConfigured = Boolean(API_ORIGIN);
+export const isApiConfigured = Boolean(BACKEND_API_ORIGIN);
 
 export type Platform = "MT4" | "MT5";
 
