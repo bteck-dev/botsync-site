@@ -10,10 +10,21 @@
  */
 
 const configuredApi = (import.meta.env["VITE_BOTSYNC_API_URL"] as string | undefined) ?? "";
-const rawApi = configuredApi || (import.meta.env.DEV ? "http://localhost:3000" : "");
-const configuredPortal =
-  (import.meta.env["VITE_BOTSYNC_PORTAL_URL"] as string | undefined) ?? "";
-const rawPortal = configuredPortal || "https://portal.bot-sync.com";
+const configuredPortal = (import.meta.env["VITE_BOTSYNC_PORTAL_URL"] as string | undefined) ?? "";
+const isDev = import.meta.env.DEV;
+const isStaging = import.meta.env.MODE === "staging";
+
+const defaultApiOrigin = isDev
+  ? "http://localhost:3000"
+  : isStaging
+    ? "https://api-uat.bot-sync.com"
+    : "https://api.bot-sync.com";
+const defaultPortalOrigin = isStaging
+  ? "https://portal-uat.bot-sync.com"
+  : "https://portal.bot-sync.com";
+
+const rawApi = configuredApi || defaultApiOrigin;
+const rawPortal = configuredPortal || defaultPortalOrigin;
 const trim = (v: string) => v.replace(/\/+$/, "");
 
 export const API_ORIGIN = trim(rawApi);

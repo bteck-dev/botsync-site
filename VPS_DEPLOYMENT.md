@@ -34,5 +34,10 @@ Create a `production` environment in `bteck-dev/botsync-site` with:
 - `VITE_BOTSYNC_API_URL`: `https://api.bot-sync.com`
 - `VITE_BOTSYNC_PORTAL_URL`: `https://portal.bot-sync.com`
 
+For staging builds, use the UAT origins instead:
+
+- `VITE_BOTSYNC_API_URL`: `https://api-uat.bot-sync.com`
+- `VITE_BOTSYNC_PORTAL_URL`: `https://portal-uat.bot-sync.com`
+
 Pushes to `release/production` run lint, type-check, build, upload the release,
 build the Docker image on the VPS, and verify both the container and public URL.
