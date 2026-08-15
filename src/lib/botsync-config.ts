@@ -20,10 +20,10 @@ export const API_ORIGIN = trim(rawApi);
 export const API_BASE = `${API_ORIGIN}/api/v1`;
 export const PORTAL_ORIGIN = trim(rawPortal);
 export const authUrls = {
-  login: "/under-construction?feature=login",
-  register: "/under-construction?feature=builder",
+  login: `${PORTAL_ORIGIN}/login`,
+  register: `${PORTAL_ORIGIN}/register`,
 };
-export const appDownloadUrl = "/under-construction?feature=download";
+export const appDownloadUrl = "https://bot-sync.com/downloads/BotSync-Android.apk";
 export const socialUrls = {
   whatsapp: (import.meta.env["VITE_BOTSYNC_WHATSAPP_URL"] as string | undefined) || "https://wa.me/27737526797",
   tiktok: (import.meta.env["VITE_BOTSYNC_TIKTOK_URL"] as string | undefined) || "https://www.tiktok.com/@bakonetrades_1",

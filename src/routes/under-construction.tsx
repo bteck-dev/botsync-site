@@ -1,7 +1,8 @@
-import { Apple, ArrowLeft, Construction, Mail, Smartphone, Sparkles } from "lucide-react";
+import { Apple, ArrowLeft, Construction, Download, Mail, Smartphone, Sparkles } from "lucide-react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Logo } from "@/components/site/Logo";
 import { ctaStyles } from "@/components/site/primitives";
+import { appDownloadUrl } from "@/lib/botsync-config";
 
 type ConstructionSearch = {
   feature?: "login" | "builder" | "download";
@@ -56,18 +57,23 @@ function UnderConstructionPage() {
         {feature === "download" ? (
           <>
             <p className="mx-auto mt-5 max-w-lg leading-relaxed text-muted-foreground sm:text-lg">
-              BotSync for iOS and Android is coming soon.
+              BotSync is available for Android. The iOS app is still under construction.
             </p>
             <div className="mx-auto mt-8 grid max-w-lg gap-3 sm:grid-cols-2">
               <div className="rounded-2xl border border-border bg-surface/60 p-5">
                 <Apple className="mx-auto size-7" aria-hidden="true" />
                 <p className="mt-3 font-semibold">iOS</p>
-                <p className="mt-1 text-xs text-brand-cyan">Coming soon</p>
+                <p className="mt-1 text-xs text-brand-cyan">Under construction</p>
               </div>
               <div className="rounded-2xl border border-border bg-surface/60 p-5">
                 <Smartphone className="mx-auto size-7" aria-hidden="true" />
                 <p className="mt-3 font-semibold">Android</p>
-                <p className="mt-1 text-xs text-brand-emerald">Coming soon</p>
+                <a
+                  href={appDownloadUrl}
+                  className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-brand-emerald hover:text-foreground"
+                >
+                  <Download className="size-3.5" aria-hidden="true" /> Download APK
+                </a>
               </div>
             </div>
             <a href="mailto:support@botsync.app?subject=BotSync%20App%20Enquiry" className="mt-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground">
