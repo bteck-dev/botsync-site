@@ -3,10 +3,11 @@ import { Reveal, Section, SectionHeading } from "./primitives";
 
 const features = [
   { icon: Bot, title: "Expert Advisors", text: "Create, connect, and control automated MT4 and MT5 strategies." },
-  { icon: ScanLine, title: "AI & Market News", text: "Review chart analysis, market context, and key economic events together." },
+  { icon: ScanLine, title: "AI Chart Scanner", text: "Upload, paste, or drop a chart screenshot to receive a structured prediction for review." },
+  { icon: Activity, title: "Rule-Based Market Strategy", text: "Analyse direct market-price data with consistent trend, momentum, and volatility rules." },
   { icon: CalendarClock, title: "Trade Scheduling", text: "Choose when strategies run across sessions and market events." },
   { icon: Users, title: "Trader Management", text: "Manage members, licences, brokers, and activity from one dashboard." },
-  { icon: Activity, title: "Live Monitoring", text: "Follow bot activity, executions, and account status as they happen." },
+  { icon: Activity, title: "Trade Review History", text: "Review pending opportunities and track executed, rejected, and scheduled trades." },
   { icon: KeyRound, title: "Licence Control", text: "Issue and manage secure access for clients and community members." },
   { icon: Cloud, title: "Cloud Connectivity", text: "Keep your trading ecosystem connected beyond a single desktop." },
   { icon: Smartphone, title: "Mobile Management", text: "Make changes and stay informed wherever the market takes you." },

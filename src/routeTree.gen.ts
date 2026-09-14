@@ -14,6 +14,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as UnderConstructionRouteImport } from './routes/under-construction'
 import { Route as LegalIndexRouteImport } from './routes/legal.index'
 import { Route as LegalSlugRouteImport } from './routes/legal.$slug'
+import { Route as ApiV1SplatRouteImport } from './routes/api/v1/$'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -40,6 +41,11 @@ const LegalSlugRoute = LegalSlugRouteImport.update({
   path: '/legal/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiV1SplatRoute = ApiV1SplatRouteImport.update({
+  id: '/api/v1/$',
+  path: '/api/v1/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -47,6 +53,7 @@ export interface FileRoutesByFullPath {
   '/under-construction': typeof UnderConstructionRoute
   '/legal/$slug': typeof LegalSlugRoute
   '/legal/': typeof LegalIndexRoute
+  '/api/v1/$': typeof ApiV1SplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -54,6 +61,7 @@ export interface FileRoutesByTo {
   '/under-construction': typeof UnderConstructionRoute
   '/legal/$slug': typeof LegalSlugRoute
   '/legal': typeof LegalIndexRoute
+  '/api/v1/$': typeof ApiV1SplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -62,12 +70,25 @@ export interface FileRoutesById {
   '/under-construction': typeof UnderConstructionRoute
   '/legal/$slug': typeof LegalSlugRoute
   '/legal/': typeof LegalIndexRoute
+  '/api/v1/$': typeof ApiV1SplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/under-construction' | '/legal/$slug' | '/legal/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/under-construction'
+    | '/legal/$slug'
+    | '/legal/'
+    | '/api/v1/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/under-construction' | '/legal/$slug' | '/legal'
+  to:
+    | '/'
+    | '/about'
+    | '/under-construction'
+    | '/legal/$slug'
+    | '/legal'
+    | '/api/v1/$'
   id:
     | '__root__'
     | '/'
@@ -75,6 +96,7 @@ export interface FileRouteTypes {
     | '/under-construction'
     | '/legal/$slug'
     | '/legal/'
+    | '/api/v1/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -83,6 +105,7 @@ export interface RootRouteChildren {
   UnderConstructionRoute: typeof UnderConstructionRoute
   LegalSlugRoute: typeof LegalSlugRoute
   LegalIndexRoute: typeof LegalIndexRoute
+  ApiV1SplatRoute: typeof ApiV1SplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -122,6 +145,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LegalSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/v1/$': {
+      id: '/api/v1/$'
+      path: '/api/v1/$'
+      fullPath: '/api/v1/$'
+      preLoaderRoute: typeof ApiV1SplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -131,6 +161,7 @@ const rootRouteChildren: RootRouteChildren = {
   UnderConstructionRoute: UnderConstructionRoute,
   LegalSlugRoute: LegalSlugRoute,
   LegalIndexRoute: LegalIndexRoute,
+  ApiV1SplatRoute: ApiV1SplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

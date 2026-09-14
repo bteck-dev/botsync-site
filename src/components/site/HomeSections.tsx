@@ -1,10 +1,11 @@
-import { ArrowUpRight, BarChart3, BrainCircuit, CandlestickChart, CheckCircle2, Globe2, Newspaper, Radar, Smartphone, Sparkles } from "lucide-react";
+import { ArrowUpRight, BarChart3, BrainCircuit, CandlestickChart, CheckCircle2, Coins, Globe2, Radar, ShieldCheck, Smartphone, Sparkles } from "lucide-react";
 import { Reveal, Section, SectionHeading } from "./primitives";
 
 const aiTools = [
-  { icon: CandlestickChart, title: "AI Chart Analysis", text: "Turn complex price action into a clear, structured market view in seconds.", tag: "Technical insight" },
-  { icon: Newspaper, title: "Smart Market News", text: "See the events that matter and understand how they may affect your instruments.", tag: "Live context" },
-  { icon: Radar, title: "Market Structure", text: "Identify momentum, volatility, and important levels before acting on a setup.", tag: "Signal clarity" },
+  { icon: CandlestickChart, title: "AI Chart Scanner", text: "Upload, paste, or drag in a chart screenshot. Receive the symbol, direction, entry, stop loss, take profit, confidence, and reasons.", tag: "Screenshot analysis" },
+  { icon: Radar, title: "BotSync Rule Strategy", text: "Use direct market candles and consistent trend, momentum, and volatility rules without writing predictions manually.", tag: "Direct market data" },
+  { icon: ShieldCheck, title: "Mentor Review", text: "BUY and SELL candidates enter a review queue. Edit, execute, schedule, or reject a trade before students receive it.", tag: "Human control" },
+  { icon: Coins, title: "Simple Token Usage", text: "Tokens fund analysis and execution. WAIT results and duplicate rule checks do not consume a strategy token.", tag: "Usage based" },
 ];
 
 export function AboutHome() {
@@ -60,7 +61,7 @@ export function AiTools() {
       <div className="pointer-events-none absolute top-1/2 left-1/2 size-[30rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-blue/10 blur-[110px]" aria-hidden="true" />
       <div className="relative">
         <SectionHeading eyebrow="AI tools" title={<>Read the market with <span className="text-gradient">more confidence</span></>} description="Practical AI-powered tools help you make sense of charts, news, and market conditions without switching between platforms." />
-        <div className="mt-12 grid gap-5 lg:grid-cols-3">
+        <div className="mt-12 grid gap-5 md:grid-cols-2">
           {aiTools.map(({ icon: Icon, title, text, tag }, index) => (
             <Reveal key={title} delay={index * 80}>
               <article className="group panel relative h-full overflow-hidden p-6 transition-transform duration-300 hover:-translate-y-1 sm:p-7">

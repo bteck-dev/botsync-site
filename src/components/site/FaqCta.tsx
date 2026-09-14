@@ -26,6 +26,18 @@ const faqs = [
     q: "Does BotSync guarantee profitable trades?",
     a: "No. BotSync does not guarantee results of any kind. Trading foreign exchange and leveraged products carries substantial financial risk, including the loss of your capital. BotSync provides technology and analytical tools only — never a promise of performance.",
   },
+  {
+    q: "Do I need TradingView to use the Rule Strategy?",
+    a: "No. The Rule Strategy reads supported market-price data directly and applies BotSync's trend, momentum, and volatility rules. WAIT means the required conditions did not align, so no trade was created.",
+  },
+  {
+    q: "What is the difference between AI and Rule Strategy analysis?",
+    a: "AI interprets an uploaded chart screenshot. The Rule Strategy calculates a repeatable result from live candle data. They may disagree, especially when the screenshot and selected timeframe differ. Every result still requires mentor review.",
+  },
+  {
+    q: "How do mentor tokens work?",
+    a: "A chart scan uses one token. A new BUY or SELL created by the Rule Strategy uses one token, and executing an AI or Rule Strategy trade uses one additional token. WAIT results and duplicate rule checks are not charged as new strategy signals.",
+  },
 ];
 
 export function Faq() {
