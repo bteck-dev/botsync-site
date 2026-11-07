@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Smartphone } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
@@ -7,7 +7,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Reveal, Section, SectionHeading, ctaStyles } from "./primitives";
-import { appDownloadUrl, authUrls } from "@/lib/botsync-config";
+import { googlePlayUrl, authUrls } from "@/lib/botsync-config";
 
 const faqs = [
   {
@@ -88,8 +88,9 @@ export function FinalCta() {
               <a href={authUrls.login} className={ctaStyles.ghost}>
                 Sign In
               </a>
-              <a href={appDownloadUrl} className={ctaStyles.ghost}>
-                Download App
+              <a href={googlePlayUrl} target="_blank" rel="noreferrer" className={ctaStyles.ghost}>
+                <Smartphone className="size-4" aria-hidden="true" />
+                Get it on Google Play
               </a>
             </div>
             <p className="mt-6 text-xs text-muted-foreground">

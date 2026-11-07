@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Mail } from "lucide-react";
 import { Logo } from "./Logo";
 import { legalQuery } from "@/lib/botsync-api";
-import { appDownloadUrl, authUrls, navSections, socialUrls } from "@/lib/botsync-config";
+import { googlePlayUrl, authUrls, navSections, socialUrls } from "@/lib/botsync-config";
 
 function SocialIcon({ name, className = "size-4" }: { name: "whatsapp" | "tiktok" | "facebook"; className?: string }) {
   const paths = {
@@ -62,8 +62,8 @@ export function Footer() {
               </a>
             </li>
             <li>
-              <a href={appDownloadUrl} className="text-muted-foreground hover:text-foreground">
-                Download App
+              <a href={googlePlayUrl} target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-foreground">
+                Google Play
               </a>
             </li>
             <li>
