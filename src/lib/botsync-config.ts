@@ -34,7 +34,7 @@ export const authUrls = {
   login: `${PORTAL_ORIGIN}/login`,
   register: `${PORTAL_ORIGIN}/register`,
 };
-export const appDownloadUrl = "https://bot-sync.com/downloads/BotSync-Android.apk";
+export const googlePlayUrl = "https://play.google.com/store/apps/details?id=com.bteck.botsync";
 export const socialUrls = {
   whatsapp: (import.meta.env["VITE_BOTSYNC_WHATSAPP_URL"] as string | undefined) || "https://wa.me/27737526797",
   tiktok: (import.meta.env["VITE_BOTSYNC_TIKTOK_URL"] as string | undefined) || "https://www.tiktok.com/@bakonetrades_1",

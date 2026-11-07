@@ -1,5 +1,5 @@
-import { ArrowRight, Check, Download, Smartphone } from "lucide-react";
-import { appDownloadUrl, authUrls } from "@/lib/botsync-config";
+import { Apple, ArrowRight, Check, Smartphone } from "lucide-react";
+import { googlePlayUrl, authUrls } from "@/lib/botsync-config";
 import { ctaStyles, Reveal } from "./primitives";
 
 export function Hero() {
@@ -28,9 +28,23 @@ export function Hero() {
             <a href={authUrls.register} className={ctaStyles.primary}>
               Sign Up <ArrowRight className="size-4" aria-hidden="true" />
             </a>
-            <a href={appDownloadUrl} className={ctaStyles.ghost}>
-              <Download className="size-4" aria-hidden="true" /> Download App
+            <a href={googlePlayUrl} target="_blank" rel="noreferrer" className={ctaStyles.ghost}>
+              <Smartphone className="size-4 text-brand-emerald" aria-hidden="true" />
+              <span className="text-left">
+                Google Play
+                <span className="ml-1.5 text-xs font-normal text-muted-foreground">Android</span>
+              </span>
             </a>
+            <span
+              className={`${ctaStyles.ghost} cursor-default text-muted-foreground`}
+              aria-label="iOS app coming soon"
+            >
+              <Apple className="size-4" aria-hidden="true" />
+              <span className="text-left">
+                App Store
+                <span className="ml-1.5 text-xs font-normal">Coming soon</span>
+              </span>
+            </span>
           </div>
           <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm text-muted-foreground">
             {["MT4 & MT5", "No coding", "Mobile control"].map((item) => (

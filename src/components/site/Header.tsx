@@ -3,7 +3,7 @@ import { Menu, X, ArrowRight, Download } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { Logo } from "./Logo";
 import { ctaStyles } from "./primitives";
-import { appDownloadUrl, authUrls, navSections } from "@/lib/botsync-config";
+import { googlePlayUrl, authUrls, navSections } from "@/lib/botsync-config";
 import { cn } from "@/lib/utils";
 
 export function Header() {
@@ -55,9 +55,9 @@ export function Header() {
           <a href="mailto:support@botsync.app?subject=BotSync%20App%20Enquiry" className={ctaStyles.quiet}>
             Contact
           </a>
-          <a href={appDownloadUrl} className={ctaStyles.quiet}>
+          <a href={googlePlayUrl} target="_blank" rel="noreferrer" className={ctaStyles.quiet}>
             <Download className="size-4" aria-hidden="true" />
-            Download App
+            Google Play
           </a>
           <a href={authUrls.login} className={ctaStyles.quiet}>
             Login
@@ -101,9 +101,9 @@ export function Header() {
             <a href="mailto:support@botsync.app?subject=BotSync%20App%20Enquiry" className={ctaStyles.ghost}>
               Contact
             </a>
-            <a href={appDownloadUrl} className={ctaStyles.ghost}>
+            <a href={googlePlayUrl} target="_blank" rel="noreferrer" className={ctaStyles.ghost}>
               <Download className="size-4" aria-hidden="true" />
-              Download App
+              Google Play
             </a>
             <a href={authUrls.login} className={ctaStyles.ghost}>
               Login
